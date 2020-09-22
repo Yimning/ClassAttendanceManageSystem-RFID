@@ -2,7 +2,7 @@
 #include "delay.h"
 #include "sys.h"
 #include "rc522.h"
-//#include "lcd.h"			 //ÏÔÊ¾Ä£¿é
+//#include "lcd.h"			 //æ˜¾ç¤ºæ¨¡å—
 #include "key.h"       
 #include "usart.h"
 #include "string.h" 
@@ -14,12 +14,12 @@
 #include "relay.h"	
 #include "beep.h"	
 /*******************************
-*Á¬ÏßËµÃ÷£º
+*è¿çº¿è¯´æ˜ï¼š
 *1--SS  <----->PF13
 *2--SCK <----->PB13
 *3--MOSI<----->PB15
 *4--MISO<----->PB14
-*5--Ğü¿Õ
+*5--æ‚¬ç©º
 *6--GND <----->GND
 *7--RST <----->PF14
 *8--VCC <----->VCC
@@ -29,23 +29,22 @@ int main(void)
 	unsigned char status;
 	u8 key=0;
 //	Stm32_Clock_Init(9);
-	NVIC_PriorityGroupConfig(2); 	 //ÉèÖÃNVICÖĞ¶Ï·Ö×é2:2Î»ÇÀÕ¼ÓÅÏÈ¼¶£¬2Î»ÏìÓ¦ÓÅÏÈ¼¶
- 	delay_init();	    	 //ÑÓÊ±º¯Êı³õÊ¼»¯	
- 	RC522Pin_Init();			 //Êä³öÄ£¿é³õÊ¼»¯
+	NVIC_PriorityGroupConfig(2); 	 //è®¾ç½®NVICä¸­æ–­åˆ†ç»„2:2ä½æŠ¢å ä¼˜å…ˆçº§ï¼Œ2ä½å“åº”ä¼˜å…ˆçº§
+ 	delay_init();	    	 //å»¶æ—¶å‡½æ•°åˆå§‹åŒ–	
+ 	RC522Pin_Init();			 //è¾“å‡ºæ¨¡å—åˆå§‹åŒ–
 	uart_init(115200);
 	//LCD_Init();
 	KEY_Init();
-	InitRc522();				//³õÊ¼»¯ÉäÆµ¿¨Ä£¿é
+	InitRc522();				//åˆå§‹åŒ–å°„é¢‘å¡æ¨¡å—
   RELAY_Init();
 	BEEP_Init();	
-	RTC_Init();	  			//RTC³õÊ¼»¯	
-	OLED_Init();			//³õÊ¼»¯OLED   
+	RTC_Init();	  			//RTCåˆå§‹åŒ–	
+	OLED_Init();			//åˆå§‹åŒ–OLED   
 	OLED_ShowString(0,0,"ClassAttendence",16);  
-	//printf("°´key0»ñÈ¡¿¨ºÅ\r\n");
-	OLED_Refresh_Gram();		//¸üĞÂÏÔÊ¾µ½OLED 	
+	//printf("æŒ‰key0è·å–å¡å·\r\n");
+	OLED_Refresh_Gram();		//æ›´æ–°æ˜¾ç¤ºåˆ°OLED 	
 	
-
-	//printf("°´key0»ñÈ¡¿¨ºÅ\r\n");
+	//printf("æŒ‰key0è·å–å¡å·\r\n");
 	while(1)
 	{
 	  	displaytime(); 
@@ -54,11 +53,11 @@ int main(void)
 			{
 		   ReadCard();	
   		 BEEP=1;   
-			 delay_ms(100);//ÑÓÊ±300ms 
+			 delay_ms(100);//å»¶æ—¶300ms 
 			 BEEP=0;		
-			 delay_ms(100);//ÑÓÊ±300ms
+			 delay_ms(100);//å»¶æ—¶300ms
 			 RELAY = 0 ;
-			 delay_ms(300);//ÑÓÊ±300ms
+			 delay_ms(300);//å»¶æ—¶300ms
 			 RELAY = 1 ;
     	}
 		  if(key==2) 
